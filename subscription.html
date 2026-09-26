@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0c181c">
+  <title>Subscriptions | AnimeFlix</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/dna-base.css">
+  <style>
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: #141618;
+    }
+    body.subscription-page-body > nav.topbar {
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .ambient-bg {
+      background-image: linear-gradient(115deg, rgba(16, 18, 19, .82), rgba(29, 30, 31, .58)), url('images/dna/movies/interstellar.svg');
+      filter: grayscale(1) blur(10px) saturate(.25);
+    }
+
+    .subscription-page {
+      position: relative;
+      width: min(1120px, 92vw);
+      margin: 106px auto 60px;
+    }
+
+    .subscription-heading {
+      max-width: 740px;
+      margin: 0 auto 34px;
+      text-align: center;
+    }
+
+    .subscription-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border: 1px solid rgba(166, 169, 171, .27);
+      border-radius: 99px;
+      color: #b5b8ba;
+      background: rgba(52, 54, 56, .25);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .subscription-heading h1 {
+      margin: 17px 0 12px;
+      color: #f5f8f6;
+      font-size: clamp(36px, 6vw, 62px);
+      font-weight: 700;
+      letter-spacing: -3px;
+      line-height: 1.02;
+    }
+
+    .subscription-heading h1 span {
+      color: #aeb1b3;
+    }
+
+    .subscription-heading p {
+      max-width: 570px;
+      margin: 0 auto;
+      color: rgba(231, 238, 239, .67);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+      align-items: stretch;
+    }
+
+    .plan-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 390px;
+      padding: 25px 23px 22px;
+      overflow: hidden;
+      border: 1px solid rgba(210, 212, 213, .19);
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(215, 216, 217, .12), rgba(52, 54, 56, .15) 55%, rgba(255, 255, 255, .035));
+      box-shadow: 0 24px 65px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .15);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .plan-card {
+      isolation: isolate;
+      transform-style: preserve-3d;
+      transition: transform .45s cubic-bezier(.2, .8, .2, 1), border-color .4s ease, box-shadow .45s ease, background .45s ease;
+    }
+
+    .plan-card::before {
+      position: absolute;
+      z-index: -1;
+      content: '';
+      width: 180px;
+      height: 180px;
+      top: -115px;
+      right: -76px;
+      border-radius: 50%;
+      background: rgba(148, 151, 153, .2);
+      filter: blur(8px);
+      pointer-events: none;
+      transition: transform .55s cubic-bezier(.2, .8, .2, 1), opacity .45s ease;
+    }
+
+    .plan-card::after {
+      position: absolute;
+      z-index: 2;
+      content: '';
+      top: -45%;
+      left: -85%;
+      width: 55%;
+      height: 190%;
+      pointer-events: none;
+      opacity: 0;
+      transform: rotate(18deg);
+      background: linear-gradient(90deg, transparent, rgba(220, 221, 222, .11), transparent);
+      transition: left .75s cubic-bezier(.2, .8, .2, 1), opacity .35s ease;
+    }
+
+    .plan-card>* {
+      position: relative;
+      z-index: 3;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .plan-card:hover {
+        transform: translateY(-9px) scale(1.012);
+        border-color: rgba(173, 175, 177, .46);
+        box-shadow: 0 32px 76px rgba(0, 0, 0, .4), 0 0 30px rgba(128, 131, 134, .1), inset 0 1px 0 rgba(255, 255, 255, .2);
+      }
+
+      .plan-card:hover::before {
+        transform: translate(-24px, 22px) scale(1.35);
+        opacity: .95;
+      }
+
+      .plan-card:hover::after {
+        left: 135%;
+        opacity: 1;
+      }
+
+      .plan-card.featured:hover {
+        border-color: rgba(190, 192, 193, .8);
+        box-shadow: 0 34px 80px rgba(0, 0, 0, .43), 0 0 48px rgba(128, 131, 134, .19), inset 0 1px 0 rgba(255, 255, 255, .23);
+      }
+    }
+
+    .plan-card.featured {
+      border-color: rgba(172, 174, 176, .62);
+      background: linear-gradient(150deg, rgba(64, 66, 68, .52), rgba(222, 223, 224, .095) 63%);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .35), 0 0 38px rgba(128, 131, 134, .16), inset 0 1px 0 rgba(255, 255, 255, .2);
+    }
+
+    .plan-label {
+      min-height: 17px;
+      color: #b7b9bb;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .popular {
+      position: absolute;
+      top: 18px;
+      right: 17px;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, .19);
+      border-radius: 99px;
+      color: #d7f1ec;
+      background: rgba(255, 255, 255, .1);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .6px;
+    }
+
+    .plan-card h2 {
+      margin: 10px 0 7px;
+      font-size: 23px;
+      font-weight: 600;
+      letter-spacing: -.7px;
+    }
+
+    .plan-description {
+      min-height: 40px;
+      margin: 0;
+      color: rgba(231, 238, 239, .59);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .plan-price {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      margin: 23px 0 19px;
+    }
+
+    .plan-price strong {
+      font-size: 38px;
+      font-weight: 600;
+      letter-spacing: -2px;
+    }
+
+    .plan-price span {
+      color: rgba(231, 238, 239, .56);
+      font-size: 10px;
+    }
+
+    .plan-divider {
+      height: 1px;
+      margin-bottom: 17px;
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .plan-features {
+      display: grid;
+      gap: 12px;
+      margin: 0 0 24px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: rgba(241, 245, 244, .83);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .plan-features i {
+      color: #aeb0b2;
+      font-size: 12px;
+    }
+
+    .plan-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 42px;
+      margin-top: auto;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 11px;
+      color: #f3f7f5;
+      background: rgba(255, 255, 255, .075);
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 600;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .plan-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, .36);
+      color: white;
+      background: rgba(255, 255, 255, .13);
+    }
+
+    button.plan-button {
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .featured .plan-button {
+      border-color: #b6b8ba;
+      color: #202223;
+      background: #b6b8ba;
+    }
+
+    .featured .plan-button:hover {
+      border-color: #d2d4d5;
+      color: #202223;
+      background: #d2d4d5;
+    }
+
+    .subscription-note {
+      margin: 22px 0 0;
+      color: rgba(231, 238, 239, .45);
+      text-align: center;
+      font-size: 9px;
+    }
+
+    .subscription-note i {
+      margin-right: 5px;
+      color: #b8babc;
+    }
+
+    .purchase-overlay {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(10, 11, 12, .72);
+      backdrop-filter: blur(9px);
+      -webkit-backdrop-filter: blur(9px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .22s ease, visibility .22s ease;
+    }
+
+    .purchase-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .purchase-dialog {
+      position: relative;
+      width: min(420px, 100%);
+      padding: 30px;
+      border: 1px solid rgba(173, 175, 177, .35);
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(48, 50, 52, .88), rgba(24, 26, 27, .9));
+      box-shadow: 0 30px 90px rgba(0, 0, 0, .55), 0 0 40px rgba(128, 131, 134, .12), inset 0 1px 0 rgba(255, 255, 255, .16);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      transform: translateY(12px) scale(.98);
+      transition: transform .22s ease;
+    }
+
+    .purchase-overlay.open .purchase-dialog {
+      transform: translateY(0) scale(1);
+    }
+
+    .purchase-close {
+      position: absolute;
+      top: 13px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(255, 255, 255, .07);
+    }
+
+    .purchase-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(175, 177, 179, .32);
+      border-radius: 15px;
+      color: #b6b8ba;
+      background: rgba(62, 64, 66, .23);
+      font-size: 21px;
+    }
+
+    .purchase-dialog h2 {
+      margin: 0 32px 9px 0;
+      font-size: 25px;
+      font-weight: 600;
+      letter-spacing: -.8px;
+    }
+
+    .purchase-dialog p {
+      margin: 0 0 22px;
+      color: rgba(232, 233, 234, .7);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .purchase-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 0 22px;
+      padding: 13px 0;
+      border-top: 1px solid rgba(255, 255, 255, .12);
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+      color: rgba(232, 233, 234, .68);
+      font-size: 11px;
+    }
+
+    .purchase-summary strong {
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .purchase-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .purchase-actions button {
+      flex: 1;
+      min-height: 42px;
+      border: 1px solid rgba(255, 255, 255, .19);
+      border-radius: 11px;
+      color: #fff;
+      background: rgba(255, 255, 255, .07);
+      font-size: 11px;
+      font-weight: 600;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .purchase-actions button:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, .13);
+    }
+
+    .purchase-actions .confirm-purchase {
+      border-color: #b6b8ba;
+      color: #202223;
+      background: #b6b8ba;
+    }
+
+    .purchase-actions .confirm-purchase:hover {
+      background: #d2d4d5;
+    }
+
+    .payment-success {
+      display: none;
+      text-align: center;
+    }
+
+    .payment-success.visible {
+      display: block;
+    }
+
+    .payment-success .purchase-icon {
+      margin: 0 auto 18px;
+      color: #d2d4d5;
+    }
+
+    .payment-success h2 {
+      margin: 0 0 9px;
+    }
+
+    .payment-success p {
+      margin-bottom: 21px;
+    }
+
+    .payment-success .purchase-actions {
+      justify-content: center;
+    }
+
+    .subscription-status {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      max-width: 720px;
+      margin: 0 auto 22px;
+      padding: 15px 18px;
+      border: 1px solid rgba(177, 179, 181, .35);
+      border-radius: 14px;
+      background: linear-gradient(120deg, rgba(55, 57, 59, .5), rgba(255, 255, 255, .07));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .subscription-status.visible {
+      display: flex;
+    }
+
+    .subscription-status p {
+      margin: 0;
+      color: rgba(235, 236, 237, .82);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .subscription-status strong {
+      color: #fff;
+    }
+
+    .cancel-subscription {
+      flex: 0 0 auto;
+      padding: 9px 13px;
+      border: 1px solid rgba(181, 183, 185, .4);
+      border-radius: 9px;
+      color: #c8cacc;
+      background: rgba(54, 56, 58, .3);
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cancel-subscription:hover {
+      background: rgba(68, 70, 72, .5);
+    }
+
+    .cancel-subscription:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
+    .purchase-error {
+      display: none;
+      margin: -4px 0 16px !important;
+      padding: 10px 12px;
+      border: 1px solid rgba(166, 168, 170, .28);
+      border-radius: 10px;
+      color: #c7c9cb !important;
+      background: rgba(64, 66, 68, .22);
+      font-size: 10px !important;
+    }
+
+    .purchase-error.visible {
+      display: block;
+    }
+
+    body.dialog-open {
+      overflow: hidden;
+    }
+
+    .subscription-backdrop {
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 10%, rgba(68, 70, 72, .28), transparent 48%), radial-gradient(ellipse at 10% 82%, rgba(49, 51, 53, .16), transparent 42%), linear-gradient(180deg, rgba(13, 14, 15, .08), rgba(13, 14, 15, .7));
+    }
+
+    @media (max-width: 800px) {
+      .subscription-page {
+        margin-top: 95px;
+      }
+
+      .plan-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: auto;
+      }
+
+      .plan-card {
+        min-height: 0;
+      }
+
+      .plan-description {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .subscription-page {
+        width: 90vw;
+        margin-top: 87px;
+      }
+
+      .subscription-heading {
+        margin-bottom: 25px;
+      }
+
+      .subscription-heading h1 {
+        letter-spacing: -1.7px;
+      }
+
+      .subscription-heading p {
+        font-size: 12px;
+      }
+
+      .plan-card {
+        padding: 22px;
+      }
+
+      .subscription-status {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .plan-card,
+      .plan-card::before,
+      .plan-card::after,
+      .plan-button {
+        transition: none !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="css/dna-navbar.css">
+</head>
+
+<body class="subscription-page-body">
+  <div class="ambient-bg"></div>
+  <div class="ambient-vignette"></div>
+  <div class="ambient-grain"></div>
+  <div class="subscription-backdrop"></div>
+
+  <nav class="topbar" aria-label="Main navigation">
+    <a class="brand" href="index.html" aria-label="AnimeFlix home"><span><i class="bi bi-stars"></i></span></a>
+    <div class="nav-links">
+      <a href="index.html" data-view="new">Anime</a>
+      <a href="index.html#movieLibrary" data-view="movies">Movies</a>
+      <a href="index.html#mangaLibrary" data-view="manga">Manga</a>
+      <a href="index.html#gamingLibrary" data-view="gaming">Gaming</a>
+      <a href="index.html?view=characters" data-view="characters">Characters</a>
+      <a href="model.html">Models</a>
+      <a href="dna.html">DNA</a>
+      <a href="index.html?view=mylist">My List</a>
+      <a class="active" href="subscription.html" aria-current="page">Subscriptions</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon search-trigger" id="searchBtn" type="button" aria-label="Search"><i
+          class="bi bi-search"></i></button>
+      <button class="sign-in" type="button" aria-label="Sign in"><span class="profile"><i
+            class="bi bi-person-fill"></i><em></em></span><span class="sign-in-text">Sign In</span></button>
+    </div>
+  </nav>
+
+  <main class="subscription-page">
+    <header class="subscription-heading">
+      <span class="subscription-eyebrow"><i class="bi bi-stars"></i> ONE PASS. EVERY STORY.</span>
+      <h1>Your next world<br>is <span>one click away.</span></h1>
+      <p>From anime marathons to movie nights, pick a plan that fits your watchlist. All your favorites, together in one
+        place.</p>
+    </header>
+
+    <section class="plan-grid" aria-label="Subscription plans">
+      <article class="plan-card">
+        <span class="plan-label">A little of everything</span>
+        <h2>Starter</h2>
+        <p class="plan-description">Settle in with the essentials and find your next favorite.</p>
+        <div class="plan-price"><strong>PKR 1,699</strong><span>/ month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><i class="bi bi-check-circle-fill"></i> Anime and movie library</li>
+          <li><i class="bi bi-check-circle-fill"></i> Watch on 1 screen</li>
+          <li><i class="bi bi-check-circle-fill"></i> HD streaming</li>
+          <li><i class="bi bi-check-circle-fill"></i> New picks added regularly</li>
+        </ul>
+        <button class="plan-button" type="button" data-plan="Starter" data-price="PKR 1,699">Choose Starter <i
+            class="bi bi-arrow-right"></i></button>
+      </article>
+
+      <article class="plan-card featured">
+        <span class="plan-label">For the main character</span><span class="popular">MOST POPULAR</span>
+        <h2>Plus</h2>
+        <p class="plan-description">More worlds, more screens, and room for the whole crew.</p>
+        <div class="plan-price"><strong>PKR 2,799</strong><span>/ month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><i class="bi bi-check-circle-fill"></i> Full anime and movie library</li>
+          <li><i class="bi bi-check-circle-fill"></i> Watch on 2 screens</li>
+          <li><i class="bi bi-check-circle-fill"></i> Full HD streaming</li>
+          <li><i class="bi bi-check-circle-fill"></i> Download for offline viewing</li>
+          <li><i class="bi bi-check-circle-fill"></i> Early access to new releases</li>
+        </ul>
+        <button class="plan-button" type="button" data-plan="Plus" data-price="PKR 2,799">Choose Plus <i
+            class="bi bi-arrow-right"></i></button>
+      </article>
+
+      <article class="plan-card">
+        <span class="plan-label">The ultimate binge</span>
+        <h2>Ultimate</h2>
+        <p class="plan-description">Bring the cinematic experience home, on every screen.</p>
+        <div class="plan-price"><strong>PKR 4,199</strong><span>/ month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><i class="bi bi-check-circle-fill"></i> Everything in Plus</li>
+          <li><i class="bi bi-check-circle-fill"></i> Watch on 4 screens</li>
+          <li><i class="bi bi-check-circle-fill"></i> 4K Ultra HD where available</li>
+          <li><i class="bi bi-check-circle-fill"></i> Unlimited downloads</li>
+          <li><i class="bi bi-check-circle-fill"></i> Priority support</li>
+        </ul>
+        <button class="plan-button" type="button" data-plan="Ultimate" data-price="PKR 4,199">Choose Ultimate <i
+            class="bi bi-arrow-right"></i></button>
+      </article>
+    </section>
+    <div class="subscription-status" id="subscriptionStatus" role="status" aria-live="polite">
+      <p id="subscriptionStatusText"></p>
+      <button class="cancel-subscription" id="cancelSubscription" type="button">Cancel Subscription</button>
+    </div>
+    <p class="subscription-note"><i class="bi bi-shield-check"></i> Cancel anytime · No hidden fees · Your stories are
+      waiting</p>
+  </main>
+  <div class="purchase-overlay" id="purchaseOverlay" aria-hidden="true">
+    <section class="purchase-dialog" role="dialog" aria-modal="true" aria-labelledby="purchaseTitle">
+      <button class="purchase-close" type="button" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+      <div class="purchase-prompt" id="purchasePrompt">
+        <div class="purchase-icon"><i class="bi bi-bag-check"></i></div>
+        <h2 id="purchaseTitle">Are you sure?</h2>
+        <p id="purchaseDescription">You’re about to choose this subscription plan. Continue to confirm your selection.
+        </p>
+        <p class="purchase-error" id="purchaseError" role="alert"></p>
+        <div class="purchase-summary"><span id="selectedPlan">Plan</span><strong id="selectedPrice">$0.00 /
+            month</strong></div>
+        <div class="purchase-actions">
+          <button class="cancel-purchase" type="button">Cancel</button>
+          <button class="confirm-purchase" type="button">Confirm payment</button>
+        </div>
+      </div>
+      <div class="cancel-confirmation" id="cancelConfirmation" hidden>
+        <div class="purchase-icon"><i class="bi bi-exclamation-triangle"></i></div>
+        <h2 id="cancelTitle">Are you sure?</h2>
+        <p id="cancelDescription">Your <strong id="cancelPlanName">subscription</strong> will be cancelled. You can
+          choose a new plan right away.</p>
+        <div class="purchase-actions">
+          <button class="cancel-keep" type="button">Cancel</button>
+          <button class="confirm-cancel" type="button">I’m sure</button>
+        </div>
+      </div>
+      <div class="payment-success" id="paymentSuccess" role="status" aria-live="polite">
+        <div class="purchase-icon"><i class="bi bi-check2-circle"></i></div>
+        <h2>Payment confirmed!</h2>
+        <p id="paymentMessage">Your subscription selection is confirmed. You’re ready for your next story.</p>
+        <div class="purchase-actions"><button class="close-success" type="button">Back to plans</button></div>
+      </div>
+    </section>
+  </div>
+  <script>
+    (() => {
+      const overlay = document.getElementById('purchaseOverlay');
+      const prompt = document.getElementById('purchasePrompt');
+      const cancelConfirmation = document.getElementById('cancelConfirmation');
+      const success = document.getElementById('paymentSuccess');
+      const statusPanel = document.getElementById('subscriptionStatus');
+      const statusText = document.getElementById('subscriptionStatusText');
+      const cancelButton = document.getElementById('cancelSubscription');
+      let selected = { plan: 'Plus', price: 'PKR 2,799' };
+      const storageKey = 'animeflixSubscription';
+      let activeSubscription = loadSubscription();
+
+      function loadSubscription() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(storageKey));
+          if (!saved || !saved.plan || !saved.price || !saved.expiresAt) return null;
+          if (Date.now() >= saved.expiresAt) {
+            localStorage.removeItem(storageKey);
+            return null;
+          }
+          return saved;
+        } catch { return null; }
+      }
+
+      function formatDate(timestamp) {
+        return new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(timestamp));
+      }
+
+      function showSubscription() {
+        if (!activeSubscription) {
+          statusPanel.classList.remove('visible');
+          return;
+        }
+        statusText.innerHTML = '<strong>' + activeSubscription.plan + ' plan active</strong> · ' + activeSubscription.price + ' / month · Renews or expires ' + formatDate(activeSubscription.expiresAt);
+        statusPanel.classList.add('visible');
+      }
+
+      function closeDialog() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('dialog-open');
+        window.setTimeout(() => {
+          prompt.hidden = false;
+          cancelConfirmation.hidden = true;
+          success.classList.remove('visible');
+        }, 220);
+      }
+
+      document.querySelectorAll('.plan-button').forEach(button => {
+        button.addEventListener('click', () => {
+          activeSubscription = loadSubscription();
+          if (activeSubscription) {
+            document.getElementById('purchaseError').textContent = 'You already have an active ' + activeSubscription.plan + ' subscription until ' + formatDate(activeSubscription.expiresAt) + '. Cancel it or wait for it to expire before choosing another plan.';
+            document.getElementById('purchaseError').classList.add('visible');
+            document.getElementById('selectedPlan').textContent = 'Active subscription';
+            document.getElementById('selectedPrice').textContent = activeSubscription.price + ' / month';
+            overlay.querySelector('.confirm-purchase').hidden = true;
+            overlay.querySelector('.cancel-purchase').textContent = 'Back to plans';
+            prompt.querySelector('.purchase-icon i').className = 'bi bi-exclamation-circle';
+            document.getElementById('purchaseTitle').textContent = 'Subscription already active';
+            document.getElementById('purchaseDescription').textContent = 'You can only have one subscription at a time.';
+            prompt.hidden = false;
+            success.classList.remove('visible');
+            overlay.classList.add('open');
+            overlay.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('dialog-open');
+            overlay.querySelector('.cancel-purchase').focus();
+            return;
+          }
+          selected = { plan: button.dataset.plan, price: button.dataset.price };
+          document.getElementById('purchaseError').classList.remove('visible');
+          overlay.querySelector('.confirm-purchase').hidden = false;
+          overlay.querySelector('.cancel-purchase').textContent = 'Cancel';
+          prompt.querySelector('.purchase-icon i').className = 'bi bi-bag-check';
+          document.getElementById('purchaseTitle').textContent = 'Are you sure?';
+          document.getElementById('purchaseDescription').textContent = 'You’re about to choose this subscription plan. Continue to confirm your selection.';
+          document.getElementById('selectedPlan').textContent = selected.plan + ' plan';
+          document.getElementById('selectedPrice').textContent = selected.price + ' / month';
+          prompt.hidden = false;
+          success.classList.remove('visible');
+          overlay.classList.add('open');
+          overlay.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('dialog-open');
+          overlay.querySelector('.cancel-purchase').focus();
+        });
+      });
+
+      overlay.querySelector('.confirm-purchase').addEventListener('click', () => {
+        const now = Date.now();
+        const expiresAt = new Date(now);
+        expiresAt.setMonth(expiresAt.getMonth() + 1);
+        activeSubscription = { plan: selected.plan, price: selected.price, startedAt: now, expiresAt: expiresAt.getTime() };
+        localStorage.setItem(storageKey, JSON.stringify(activeSubscription));
+        showSubscription();
+        prompt.hidden = true;
+        document.getElementById('paymentMessage').textContent = 'Your ' + selected.plan + ' plan is confirmed at ' + selected.price + ' per month. This demo does not process a real payment.';
+        success.classList.add('visible');
+        overlay.querySelector('.close-success').focus();
+      });
+      cancelButton.addEventListener('click', () => {
+        if (!activeSubscription) return;
+        prompt.hidden = true;
+        success.classList.remove('visible');
+        cancelConfirmation.hidden = false;
+        document.getElementById('cancelPlanName').textContent = activeSubscription.plan + ' plan';
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('dialog-open');
+        overlay.querySelector('.cancel-keep').focus();
+      });
+      overlay.querySelector('.cancel-keep').addEventListener('click', closeDialog);
+      overlay.querySelector('.confirm-cancel').addEventListener('click', () => {
+        const cancelled = activeSubscription;
+        activeSubscription = null;
+        localStorage.removeItem(storageKey);
+        cancelConfirmation.hidden = true;
+        showSubscription();
+        statusPanel.classList.add('visible');
+        cancelButton.hidden = true;
+        statusText.textContent = cancelled.plan + ' subscription cancelled.';
+        window.setTimeout(() => {
+          cancelButton.hidden = false;
+          if (!activeSubscription) statusPanel.classList.remove('visible');
+        }, 2800);
+        closeDialog();
+      });
+      overlay.querySelector('.cancel-purchase').addEventListener('click', closeDialog);
+      overlay.querySelector('.purchase-close').addEventListener('click', closeDialog);
+      overlay.querySelector('.close-success').addEventListener('click', closeDialog);
+      overlay.addEventListener('click', event => { if (event.target === overlay) closeDialog(); });
+      document.addEventListener('keydown', event => { if (event.key === 'Escape' && overlay.classList.contains('open')) closeDialog(); });
+      showSubscription();
+      window.setInterval(() => {
+        if (activeSubscription && Date.now() >= activeSubscription.expiresAt) {
+          activeSubscription = null;
+          localStorage.removeItem(storageKey);
+          showSubscription();
+        }
+      }, 60000);
+    })();
+  </script>
+</body>
+
+</html>

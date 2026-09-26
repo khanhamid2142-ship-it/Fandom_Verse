@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b12">
+  <title>Character Studio — AnimeFlix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/model-base.css">
+  <link rel="stylesheet" href="css/model.css">
+</head>
+<body class="model-page">
+  <main class="studio">
+    <nav class="topbar" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="AnimeFlix home"><img class="brand-image" src="images/fv-logo.png" alt="AnimeFlix"></a>
+      <div class="nav-links">
+        <a href="index.html">Anime</a>
+        <a href="index.html#movieLibrary">Movies</a>
+        <a href="index.html#mangaLibrary">Manga</a>
+        <a href="index.html#gamingLibrary">Gaming</a>
+        <a href="index.html?view=characters">Characters</a>
+        <a class="active" href="model.html">Models</a>
+        <a href="dna.html">DNA</a>
+        <a href="index.html?view=mylist">My List</a>
+        <a href="subscription.html">Subscriptions</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="nav-actions">
+        <a class="nav-icon search-trigger" href="index.html" aria-label="Search"><i class="bi bi-search"></i></a>
+        <a class="sign-in" href="index.html" aria-label="Sign in"><span class="profile"><i class="bi bi-person-fill"></i><em></em></span><span class="sign-in-text">Sign In</span></a>
+      </div>
+    </nav>
+    <div class="ambient-bg" aria-hidden="true"></div>
+    <div class="ambient-vignette" aria-hidden="true"></div>
+    <div class="ambient-grain" aria-hidden="true"></div>
+    <section class="workspace" id="workspace" aria-label="Interactive character model viewer">
+      <aside class="intro">
+        <p class="eyebrow"><span>01</span> &nbsp;THE CHARACTER LAB</p>
+        <h1>Bring your<br>favorite <em>hero</em><br>to life.</h1>
+        <p class="intro-copy">A little closer to the characters you love. Choose a hero, then turn them around and explore every angle.</p>
+        <div class="selected-character"><span class="selected-avatar" id="avatar">悟</span><span><small>NOW EXPLORING</small><strong id="selectedName">Son Goku</strong></span><span class="status-pill"><i></i> READY</span></div>
+        <label class="collection-select-wrap" for="collectionSelect"><span>COLLECTION</span><select id="collectionSelect" aria-label="Choose a character collection"><option value="anime">Anime</option><option value="movies">The Dark Knight</option><option value="onepiece">One Piece</option><option value="jujutsu">Jujutsu Kaisen</option><option value="avengers">Avengers</option><option value="justiceleague">Justice League</option><option value="xmen">Deadpool &amp; Wolverine</option><option value="gladiator">Gladiator</option><option value="deathnote">Death Note</option></select></label>
+        <div class="character-picker-label">CHARACTERS <span id="characterCount">06</span></div>
+        <div class="character-picker" id="characterPicker" role="group" aria-label="Choose a character"></div>
+        <div class="tip"><i class="bi bi-mouse"></i><span><strong>Explorer tip</strong><br>Drag the model to spin it. Scroll or pinch to zoom.</span></div>
+      </aside>
+
+      <section class="viewer-column" aria-label="3D model controls">
+        <div class="viewer" id="viewer">
+          <div class="viewer-top"><span class="viewer-chip"><i class="bi bi-box"></i> LEGO-STYLE CHARACTER FIGURE</span><button class="icon-button" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Toggle fullscreen"><i class="bi bi-fullscreen"></i></button></div>
+          <div class="model-stage" id="modelStage" tabindex="0" aria-label="Drag to rotate the 3D anime character. Use arrow keys to rotate and plus or minus to zoom.">
+            <div class="stage-glow"></div><div class="stage-grid"></div><div class="model-shadow"></div>
+            <canvas id="modelCanvas" aria-label="Volumetric 3D anime character. Drag to rotate and scroll to zoom."></canvas>
+            <div class="axis axis-x">X <span></span></div><div class="axis axis-y">Y <span></span></div>
+            <div class="view-label"><span>VIEW</span><strong id="viewAngle">FRONT</strong></div>
+            <div class="stage-corners"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="viewer-bottom"><span class="drag-hint"><i class="bi bi-arrows-move"></i> DRAG TO ROTATE</span><span class="model-index"><span id="modelNumber">01</span> <i class="bi bi-slash-lg"></i> <span id="modelTotal">06</span></span><div class="viewer-controls"><button class="icon-button emote-button" id="emoteBtn" aria-label="Play character emote" title="Play character emote"><i class="bi bi-stars"></i></button><button class="icon-button" id="zoomOut" aria-label="Zoom out"><i class="bi bi-dash-lg"></i></button><button class="icon-button" id="zoomIn" aria-label="Zoom in"><i class="bi bi-plus-lg"></i></button><button class="icon-button reset-button" id="resetView" aria-label="Reset rotation and zoom"><i class="bi bi-arrow-counterclockwise"></i></button></div></div>
+        </div>
+        <div class="footer-note"><span>GLOSSY BRICK-BUILT 3D MODEL</span><span><i class="bi bi-shield-check"></i> ORIGINAL FAN-MADE FIGURE</span></div>
+      </section>
+
+      <aside class="details">
+        <div class="details-head"><span class="eyebrow">CHARACTER PROFILE</span><span class="profile-number" id="profileNumber">NO. 001</span></div>
+        <h2 id="profileName">Son Goku</h2><p class="franchise" id="franchise">DRAGON BALL Z <span>·</span> SAIYAN</p>
+        <div class="rule"></div>
+        <p class="bio" id="bio">A cheerful martial artist with an unshakable spirit. Goku is always ready to protect his friends and discover how strong he can become.</p>
+        <div class="traits"><div><span>ORIGIN</span><strong id="origin">Planet Vegeta</strong></div><div><span>FIGHTING STYLE</span><strong id="style">Ki martial arts</strong></div><div><span>SIGNATURE MOVE</span><strong id="move">Kamehameha</strong></div></div>
+        <div class="power-label"><span>POWER LEVEL</span><b id="power">OVER 9000</b></div><div class="power-track"><span id="powerBar"></span></div>
+        <div class="model-tag"><i class="bi bi-box-seam"></i><span><strong>3D character model</strong><small>Stylized • Interactive • Fan-made</small></span><i class="bi bi-arrow-up-right"></i></div>
+      </aside>
+    </section>
+    <section class="movie-character-section" aria-labelledby="movieCharactersTitle">
+      <div class="movie-character-heading">
+        <div><p class="eyebrow"><span>02</span> &nbsp;THE DARK KNIGHT</p><h2 id="movieCharactersTitle">The Dark Knight characters</h2><p>Pick a character below to load their animated brick-built model above.</p></div>
+        <span class="movie-count"><i class="bi bi-film"></i> 05 CHARACTERS</span>
+      </div>
+      <div class="character-picker movie-character-picker" id="movieCharacterPicker" role="group" aria-label="Choose a Dark Knight character"></div>
+    </section>
+    <section class="movie-character-section" aria-labelledby="onePieceTitle">
+      <div class="movie-character-heading">
+        <div><p class="eyebrow"><span>03</span> &nbsp;GRAND LINE</p><h2 id="onePieceTitle">One Piece characters</h2><p>Pick a Straw Hat to load their animated brick-built model above.</p></div>
+        <span class="movie-count"><i class="bi bi-compass"></i> 04 CHARACTERS</span>
+      </div>
+      <div class="character-picker movie-character-picker" id="onePieceCharacterPicker" role="group" aria-label="Choose a One Piece character"></div>
+    </section>
+    <section class="movie-character-section" aria-labelledby="jujutsuTitle">
+      <div class="movie-character-heading">
+        <div><p class="eyebrow"><span>04</span> &nbsp;CURSED ENERGY</p><h2 id="jujutsuTitle">Jujutsu Kaisen characters</h2><p>Choose a sorcerer and explore their model from every angle.</p></div>
+        <span class="movie-count"><i class="bi bi-lightning-charge"></i> 04 CHARACTERS</span>
+      </div>
+      <div class="character-picker movie-character-picker" id="jujutsuCharacterPicker" role="group" aria-label="Choose a Jujutsu Kaisen character"></div>
+    </section>
+    <section class="movie-character-section" aria-labelledby="avengersTitle">
+      <div class="movie-character-heading">
+        <div><p class="eyebrow"><span>05</span> &nbsp;EARTH'S MIGHTIEST</p><h2 id="avengersTitle">Avengers characters</h2><p>Pick an Avenger to bring their signature suit and gear into the viewer.</p></div>
+        <span class="movie-count"><i class="bi bi-shield"></i> 06 CHARACTERS</span>
+      </div>
+      <div class="character-picker movie-character-picker" id="avengersCharacterPicker" role="group" aria-label="Choose an Avengers character"></div>
+    </section>
+    <section class="movie-character-section" aria-labelledby="justiceLeagueTitle">
+      <div class="movie-character-heading">
+        <div><p class="eyebrow"><span>06</span> &nbsp;HEROES UNITED</p><h2 id="justiceLeagueTitle">Justice League characters</h2><p>Choose a League hero to load their model in the viewer.</p></div>
+        <span class="movie-count"><i class="bi bi-shield-fill"></i> 06 CHARACTERS</span>
+      </div>
+      <div class="character-picker movie-character-picker" id="justiceLeagueCharacterPicker" role="group" aria-label="Choose a Justice League character"></div>
+    </section>
+    <section class="movie-character-section" aria-labelledby="xMenTitle">
+      <div class="movie-character-heading">
+        <div><p class="eyebrow"><span>07</span> &nbsp;MARVEL ANTIHEROES</p><h2 id="xMenTitle">Deadpool & Wolverine</h2><p>Choose a mutant fighter and load their detailed model above.</p></div>
+        <span class="movie-count"><i class="bi bi-lightning-charge-fill"></i> 02 CHARACTERS</span>
+      </div>
+      <div class="character-picker movie-character-picker" id="xMenCharacterPicker" role="group" aria-label="Choose Deadpool or Wolverine"></div>
+    </section>
+    <section class="movie-character-section" aria-labelledby="gladiatorTitle">
+      <div class="movie-character-heading">
+        <div><p class="eyebrow"><span>08</span> &nbsp;THE ARENA</p><h2 id="gladiatorTitle">Gladiator characters</h2><p>Choose a Roman hero to explore their armor, weapons, and profile.</p></div>
+        <span class="movie-count"><i class="bi bi-shield-fill"></i> 03 CHARACTERS</span>
+      </div>
+      <div class="character-picker movie-character-picker" id="gladiatorCharacterPicker" role="group" aria-label="Choose a Gladiator character"></div>
+    </section>
+    <section class="movie-character-section" aria-labelledby="deathNoteTitle">
+      <div class="movie-character-heading">
+        <div><p class="eyebrow"><span>09</span> &nbsp;THE DEATH NOTE</p><h2 id="deathNoteTitle">Death Note characters</h2><p>Choose a notebook holder or shinigami to load their model.</p></div>
+        <span class="movie-count"><i class="bi bi-journal-bookmark-fill"></i> 04 CHARACTERS</span>
+      </div>
+      <div class="character-picker movie-character-picker" id="deathNoteCharacterPicker" role="group" aria-label="Choose a Death Note character"></div>
+    </section>
+    <footer class="page-footer"><span>ANIMEFLIX CHARACTER STUDIO <i>©</i> 2025</span><span>MOVE FREELY. EXPLORE EVERY ANGLE.</span></footer>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="js/model.js"></script>
+</body>
+</html>

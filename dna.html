@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c181c">
+  <title>DNA | AnimeFlix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/dna-base.css">
+  <link rel="stylesheet" href="css/dna.css">
+  <link rel="stylesheet" href="css/dna-navbar.css">
+</head>
+<body class="battle-page">
+  <div class="ambient-bg"></div><div class="ambient-vignette"></div><div class="ambient-grain"></div>
+  <nav class="topbar" aria-label="Main navigation">
+    <a class="brand" href="index.html" aria-label="AnimeFlix home"><img class="brand-image" src="images/fv-logo.png" alt="AnimeFlix"></a>
+    <div class="nav-links">
+      <a href="index.html">Anime</a><a href="index.html#movieLibrary">Movies</a><a href="index.html#mangaLibrary">Manga</a><a href="index.html#gamingLibrary">Gaming</a>
+      <a href="index.html?view=characters">Characters</a><a href="model.html">Models</a><a class="active" href="dna.html" aria-current="page">DNA</a><a href="index.html?view=mylist">My List</a><a href="subscription.html">Subscriptions</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a>
+    </div>
+    <div class="nav-actions"><a class="nav-icon" href="index.html" aria-label="Search"><i class="bi bi-search"></i></a><a class="sign-in" href="index.html"><span class="profile"><i class="bi bi-person-fill"></i><em></em></span><span class="sign-in-text">Sign In</span></a></div>
+  </nav>
+
+  <main class="battle-shell">
+    <section class="battle-panel" aria-labelledby="battleTitle">
+      <header class="battle-heading">
+        <p class="battle-kicker"><i class="bi bi-stars"></i> ANIMEFLIX PERSONALITY MATCH</p>
+        <h1 id="battleTitle">Which story is <em>your DNA?</em></h1>
+        <p class="battle-intro">Choose anime, movies, or characters, then pick your favorite in ten head-to-head battles. The last one standing becomes your DNA.</p>
+      </header>
+
+      <div class="battle-mode" role="group" aria-label="Choose what to battle">
+        <button class="mode-button" type="button" data-mode="anime" aria-pressed="false"><i class="bi bi-stars"></i><span>ANIME</span><small>Anime titles only</small></button>
+        <button class="mode-button" type="button" data-mode="movies" aria-pressed="false"><i class="bi bi-film"></i><span>MOVIES</span><small>Movie titles only</small></button>
+        <button class="mode-button" type="button" data-mode="characters" aria-pressed="false"><i class="bi bi-person-bounding-box"></i><span>CHARACTERS</span><small>Character matchups</small></button>
+      </div>
+
+      <div class="battle-progress" aria-live="polite" hidden>
+        <div class="progress-copy"><span id="roundLabel">BATTLE 01 <i>/ 10</i></span><span id="progressMessage">Pick your favorite</span></div>
+        <div class="progress-track" role="progressbar" aria-label="Battle progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><span id="progressFill"></span></div>
+      </div>
+
+      <div class="duel" id="duel" aria-label="Choose your favorite title" hidden>
+        <button class="title-card" id="choiceA" type="button" aria-label="Choose first title">
+          <span class="card-art"><img alt="" src=""><span class="art-shade"></span><span class="card-category"></span><span class="card-title"></span></span>
+          <span class="card-footer"><span class="choose-label">THIS ONE IS MY DNA</span><i class="bi bi-arrow-up-right"></i></span>
+        </button>
+        <div class="versus" aria-hidden="true"><span>OR</span><i class="bi bi-lightning-charge-fill"></i></div>
+        <button class="title-card" id="choiceB" type="button" aria-label="Choose second title">
+          <span class="card-art"><img alt="" src=""><span class="art-shade"></span><span class="card-category"></span><span class="card-title"></span></span>
+          <span class="card-footer"><span class="choose-label">THIS ONE IS MY DNA</span><i class="bi bi-arrow-up-right"></i></span>
+        </button>
+      </div>
+      <p class="battle-hint" hidden><i class="bi bi-hand-index-thumb"></i> Go with your gut. There are no wrong answers.</p>
+
+      <section class="result-panel" id="resultPanel" aria-live="polite" hidden>
+        <div class="result-art"><img id="winnerImage" src="" alt=""><span class="result-glow"></span><span class="result-stamp"><i class="bi bi-stars"></i> YOUR DNA</span></div>
+        <div class="result-copy"><p class="battle-kicker">YOUR PICKS. ONE PERSONALITY.</p><h2 id="winnerTitle"></h2><p id="winnerDescription"></p><div class="result-actions"><button class="restart-button" id="restartButton" type="button"><i class="bi bi-arrow-repeat"></i> PLAY AGAIN</button><button class="share-button" id="shareButton" type="button"><i class="bi bi-share"></i> SHARE RESULT</button></div><p class="share-status" id="shareStatus" role="status"></p></div>
+      </section>
+    </section>
+    <footer class="battle-footer"><span>ANIMEFLIX <i>·</i> YOUR DNA</span><span>YOUR TASTE. YOUR STORY.</span></footer>
+  </main> 
+  <script src="js/dna.js?v=2"></script>
+</body>
+</html>
+               
